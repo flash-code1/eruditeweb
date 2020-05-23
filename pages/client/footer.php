@@ -28,16 +28,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                             <a class="nav-link" href="#">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Shop</a>
+                                            <a class="nav-link" href="#">ClassRoom</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Product</a>
+                                            <a class="nav-link" href="#">Membership</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Cart</a>
+                                            <a class="nav-link" href="#">Projects</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Checkout</a>
+                                            <a class="nav-link" href="#">Exams & Test</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -51,15 +51,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- ##### Footer Area End ##### -->
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-    <script src="../design/x1/js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="../../design/x1/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="../design/x1/js/popper.min.js"></script>
+    <script src="../../design/x1/js/popper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="../design/x1/js/bootstrap.min.js"></script>
+    <script src="../../design/x1/js/bootstrap.min.js"></script>
     <!-- Plugins js -->
-    <script src="../design/x1/js/plugins.js"></script>
+    <script src="../../design/x1/js/plugins.js"></script>
     <!-- Active js -->
-    <script src="../design/x1/js/active.js"></script>
+    <script src="../../design/x1/js/active.js"></script>
 
 </body>
 

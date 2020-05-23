@@ -262,7 +262,7 @@ include("header.php");
         <div class="owl-carousel owl-theme testimonial">
           <div class="testimonial__item text-center">
             <div class="testimonial__img">
-              <img src="design/img/testimonial/testimonial1.jpg" alt="">
+              <img src="design/img/jum.jpg" alt="">
             </div>
             <div class="testimonial__content">
               <h3>Mike Abeche</h3>

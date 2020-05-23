@@ -15,8 +15,8 @@
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="../design/x1/css/core-style.css">
-    <link rel="stylesheet" href="../design/x1/style.css">
+    <link rel="stylesheet" href="../../design/x1/css/core-style.css">
+    <link rel="stylesheet" href="../../design/x1/style.css">
 
 </head>
 
@@ -32,7 +32,7 @@
                     <div class="search-content">
                         <form action="#" method="get">
                             <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="design/x1/img/core-img/search.png" alt=""></button>
+                            <button type="submit"><img src="../../design/x1/img/core-img/search.png" alt=""></button>
                         </form>
                     </div>
                 </div>
@@ -70,22 +70,22 @@
             <nav class="amado-nav">
                 <ul>
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Shop</a></li>
-                    <li><a href="#">Product</a></li>
-                    <li><a href="#">Cart</a></li>
-                    <li><a href="#">Checkout</a></li>
+                    <li><a href="#">ClassRoom</a></li>
+                    <li><a href="#">Membership</a></li>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Exams & Test</a></li>
                 </ul>
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-                <a href="#" class="btn amado-btn mb-15">%Discount%</a>
+                <a href="courses.php" class="btn amado-btn mb-15">Add Course</a>
                 <a href="#" class="btn amado-btn active">New this week</a>
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
-                <a href="cart.html" class="cart-nav"><img src="../design/x1/img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-                <a href="#" class="fav-nav"><img src="../design/x1/img/core-img/favorites.png" alt=""> Favourite</a>
-                <a href="#" class="search-nav"><img src="../design/x1/img/core-img/search.png" alt=""> Search</a>
+                <!-- <a href="cart.html" class="cart-nav"><img src="../../design/x1/img/core-img/cart.png" alt=""> Cart <span>(0)</span></a> -->
+                <a href="#" class="fav-nav"><img src="../../design/x1/img/core-img/favorites.png" alt=""> Favourite</a>
+                <a href="#" class="search-nav"><img src="../../design/x1/img/core-img/search.png" alt=""> Search</a>
             </div>
             <!-- Social Button -->
             <div class="social-info d-flex justify-content-between">
