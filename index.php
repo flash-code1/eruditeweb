@@ -1,4 +1,5 @@
 <?php
+$link_page = "home";
 include("header.php");
 ?>
  <main class="side-main">
@@ -8,7 +9,7 @@ include("header.php");
         <div class="row">
           <div class="col-lg-7">
             <div class="hero-banner__img">
-              <img class="img-fluid" src="img/banner/hero-banner.png" alt="">
+              <img class="img-fluid" src="design/img/vector" alt="">
             </div>
           </div>
           <div class="col-lg-5 pt-5">
@@ -183,7 +184,7 @@ include("header.php");
       <div class="container">
         <div class="section-intro pb-85px text-center">
           <h2 class="section-intro__title">Choose Your Membership</h2>
-          <p class="section-intro__subtitle">Note. you can always Upgrade your Membership to get access to more Learning Features</p>
+          <p class="section-intro__subtitle">Note. <b>Paid Per Course</b> </p>
         </div>
 
         <div class="row">
@@ -216,7 +217,7 @@ include("header.php");
               </div>
               <ul class="card-pricing__list">
                 <li> <i class="ti-check"></i>Starter Kit</li>
-                <li> <i class="ti-check"></i> Session 3 Times Weekly</li>
+                <li> <i class="ti-check"></i> Session 4 Times Weekly</li>
                 <li class="unvalid"><i class="ti-close"></i>Unlimited Hours & Private Session</li>
                 <li><i class="ti-check"></i>Live Video Class</li>
                 <li class="unvalid"><i class="ti-close"></i>Paid Certificate</li>
@@ -236,7 +237,7 @@ include("header.php");
               </div>
               <ul class="card-pricing__list">
                 <li> <i class="ti-check"></i>Starter Kit</li>
-                <li> <i class="ti-check"></i> Session 3 Times Weekly</li>
+                <li> <i class="ti-check"></i> Session open always</li>
                 <li><i class="ti-check"></i>Unlimited Hours & Private Session</li>
                 <li><i class="ti-check"></i>Live Video Class</li>
                 <li><i class="ti-check"></i>Paid Certificate</li>
@@ -265,12 +266,12 @@ include("header.php");
               <img src="design/img/jum.jpg" alt="">
             </div>
             <div class="testimonial__content">
-              <h3>Mike Abeche</h3>
-              <p>Executive, ACI Group</p>
+              <h3>Jumoke Peace</h3>
+              <p>Accounting Student</p>
               <p class="testimonial__i">Also made from. Give may saying meat there from heaven it lights face had is gathered god earth light for life may itself shall whales made they're blessed whales also made from give may saying meat. There from heaven it lights face had also made from. Give may saying meat there from heaven</p>
             </div>
           </div>
-          <div class="testimonial__item text-center">
+          <!-- <div class="testimonial__item text-center">
             <div class="testimonial__img">
               <img src="design/img/testimonial/testimonial1.jpg" alt="">
             </div>
@@ -279,7 +280,7 @@ include("header.php");
               <p>Karu Secondary School, Abuja</p>
               <p class="testimonial__i">Also made from. Give may saying meat there from heaven it lights face had is gathered god earth light for life may itself shall whales made they're blessed whales also made from give may saying meat. There from heaven it lights face had also made from. Give may saying meat there from heaven</p>
             </div>
-          </div>
+          </div> -->
           <div class="testimonial__item text-center">
             <div class="testimonial__img">
               <img src="design/img/testimonial/testimonial1.jpg" alt="">

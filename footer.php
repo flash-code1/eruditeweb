@@ -59,13 +59,13 @@
 			</div>
 			<div class="footer-bottom row align-items-center text-center text-lg-left">
 				<p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Web was made by <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/flash-code1" target="_blank">Ajiboye Oluwaseun</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Web was made <i class="ti-infinite" aria-hidden="true"></i> by <a href="https://github.com/flash-code1" target="_blank">Ajiboye Oluwaseun</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
 				<div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
 					<a href="#"><i class="fab fa-facebook-f"></i></a>
 					<a href="#"><i class="fab fa-twitter"></i></a>
-					<a href="#"><i class="fab fa-dribbble"></i></a>
-					<a href="#"><i class="fab fa-behance"></i></a>
+					<a href="#"><i class="ti-instagram"></i></a>
+					<a href="#"><i class="ti-youtube"></i></a>
 				</div>
 			</div>
 		</div>

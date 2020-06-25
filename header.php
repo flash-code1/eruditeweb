@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Erudite Tutors - Home</title>
+  <title>Erudite Tutors - Landing</title>
 	<link rel="icon" href="img/Fevicon.png" type="image/png">
 
   <link rel="stylesheet" href="design/vendors/bootstrap/bootstrap.min.css">
@@ -32,18 +32,19 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav justify-content-end">
-              <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li> 
-              <li class="nav-item"><a class="nav-link" href="feature.html">News & Blog</a></li> 
-              <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a>
+              <li class="nav-item <?php if ($link_page == "home") { echo "active";} else { echo ""; } ?>"><a class="nav-link" href="index.php">Home</a></li> 
+              <li class="nav-item <?php if ($link_page == "news") { echo "active";} else { echo ""; }  ?>"><a class="nav-link" href="news.php">News & Blog</a></li> 
+              <li class="nav-item <?php if ($link_page == "price") { echo "active";} else { echo ""; } ?>"><a class="nav-link" href="pricing.php">Pricing</a>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Courses</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="blog.html">Professional Courses</a></li>
-                  <li class="nav-item"><a class="nav-link" href="blog-details.html">High School Courses</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Professional Course</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Short Course</a></li>
+                  <li class="nav-item"><a class="nav-link" href="sec_course.php">High School</a></li>
                 </ul>
 							</li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+              <li class="nav-item <?php if ($link_page == "contact") { echo "active";} else { echo ""; } ?>"><a class="nav-link" href="contact.php">Contact</a></li>
             </ul>
 
             <ul class="navbar-right">
