@@ -49,7 +49,7 @@
 
             <ul class="navbar-right">
               <li class="nav-item">
-                <button class="button button-header bg">Sign up</button>
+                <a href="account/login.php" class="button button-header bg">Sign up</a>
               </li>
             </ul>
           </div> 
