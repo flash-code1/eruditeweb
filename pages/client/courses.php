@@ -52,28 +52,9 @@ include("header.php");
     </div>
 </div> -->
 
-<!-- ##### Single Widget ##### -->
-<div class="widget color mb-50">
-    <!-- Widget Title -->
-    <h6 class="widget-title mb-30">Color</h6>
-
-    <div class="widget-desc">
-        <ul class="d-flex">
-            <li><a href="#" class="color1"></a></li>
-            <li><a href="#" class="color2"></a></li>
-            <li><a href="#" class="color3"></a></li>
-            <li><a href="#" class="color4"></a></li>
-            <li><a href="#" class="color5"></a></li>
-            <li><a href="#" class="color6"></a></li>
-            <li><a href="#" class="color7"></a></li>
-            <li><a href="#" class="color8"></a></li>
-        </ul>
-    </div>
-</div>
 
 <!-- ##### Single Widget ##### -->
-<div class="widget price mb-50">
-    <!-- Widget Title -->
+<!-- <div class="widget price mb-50">
     <h6 class="widget-title mb-30">Price</h6>
 
     <div class="widget-desc">
@@ -86,7 +67,7 @@ include("header.php");
             <div class="range-price">2 Star - 5 Star</div>
         </div>
     </div>
-</div>
+</div> -->
 </div>
 
 <div class="amado_product_area section-padding-100">

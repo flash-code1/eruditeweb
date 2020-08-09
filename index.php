@@ -9,7 +9,7 @@ include("header.php");
         <div class="row">
           <div class="col-lg-7">
             <div class="hero-banner__img">
-              <img class="img-fluid" src="design/img/vector" alt="">
+              <img class="img-fluid" src="design/svg/pixel-cells.png" alt="">
             </div>
           </div>
           <div class="col-lg-5 pt-5">
