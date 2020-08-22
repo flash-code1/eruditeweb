@@ -203,26 +203,26 @@
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Configuration & Staff</span></li>
                         <li class="sidebar-item mega-dropdown"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Staff Management </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item"><a href="authentication-login1.html" class="sidebar-link"><i class="mdi mdi-account-check"></i><span class="hide-menu"> Create New Staff </span></a></li>
-                                <li class="sidebar-item"><a href="starter-kit.html" class="sidebar-link"><i class="mdi mdi-account-multiple"></i> <span class="hide-menu">Manage Staff</span></a></li>
+                                <li class="sidebar-item"><a href="create_staff.php" class="sidebar-link"><i class="mdi mdi-account-check"></i><span class="hide-menu"> Create New Staff </span></a></li>
+                                <li class="sidebar-item"><a href="manage_staff.php" class="sidebar-link"><i class="mdi mdi-account-multiple"></i> <span class="hide-menu">Manage Staff</span></a></li>
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link two-column has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Blog </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="create_blog.php" class="sidebar-link">
+                                    <a href="#" class="sidebar-link">
                                         <i class="mdi mdi-checkbox-marked-circle"></i>
                                         <span class="hide-menu"> Create New Post</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="manage_comment.php" class="sidebar-link">
+                                    <a href="#" class="sidebar-link">
                                         <i class="mdi mdi-comment"></i>
                                         <span class="hide-menu"> Manage Comments</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="manage_blog.php" class="sidebar-link">
+                                    <a href="#" class="sidebar-link">
                                         <i class="mdi mdi-briefcase"></i>
                                         <span class="hide-menu"> Manage Blog Post</span>
                                     </a>
@@ -239,13 +239,13 @@
                         <li class="sidebar-item"> <a class="sidebar-link two-column has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="hide-menu">Chat & Notification </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="chat.php" class="sidebar-link">
+                                    <a href="#" class="sidebar-link">
                                         <i class="mdi mdi-comment-processing-outline"></i>
                                         <span class="hide-menu">Chat Message</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="notification.php" class="sidebar-link">
+                                    <a href="#" class="sidebar-link">
                                         <i class="mdi mdi-notification-clear-all"></i>
                                         <span class="hide-menu"> Notification </span>
                                     </a>

@@ -365,6 +365,10 @@
     <script src="../../design/admin/assets/libs/moment/min/moment.min.js"></script>
     <script src="../../design/admin/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="../../design/admin/dist/js/pages/calendar/cal-init.js"></script>
+    <!-- aii -->
+    <script src="../../design/admin/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../design/admin/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="../../design/admin/dist/js/pages/datatable/datatable-basic.init.js"></script>
     <script>
         $('#calendar').fullCalendar('option', 'height', 650);
 
