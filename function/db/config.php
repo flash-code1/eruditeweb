@@ -2,10 +2,10 @@
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no pssword) */
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'thisiste_base');
+define('DB_USERNAME', 'eruditet_admin');
 define('DB_PASSWORD', '@8;WKJddKqTo');
 define('DB_CHARSET', 'utf8');
-define('DB_NAME', 'erudite_tutors');
+define('DB_NAME', 'eruditet_tutors');
 // hello
 
 // MUTE NOTICES
