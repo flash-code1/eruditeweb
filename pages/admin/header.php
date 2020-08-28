@@ -41,6 +41,31 @@
             <div class="lds-pos"></div>
         </div>
     </div>
+    <!-- DB -->
+    <?php
+    session_start();
+    include("../../function/db/connect.php");
+    $user_id = $_SESSION["id"];
+    $username = $_SESSION["fullname"];
+    $email = $_SESSION["email"];
+    $usertype = $_SESSION["usertype"];
+    $status = $_SESSION["status"];
+    $img = $_SESSION["img"];
+    // aiit
+    if ($usertype == "staff" && $status == "Pending" || $status == "rejected") {
+        echo header("location:  ../../function/logout.php");
+    }
+
+    if(!$_SESSION["fullname"] != ""){
+        header("location: ../../account/login.php");
+        exit;
+    }
+    // aiit
+    if($usertype == ""){
+        header("location: ../../account/login.php");
+        exit;
+    }
+    ?>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -150,22 +175,22 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="../../design/logo/logo.png" alt="user" class="rounded-circle" width="31">
-                                <span class="ml-2 user-text font-medium">Steve</span><span class="fas fa-angle-down ml-2 user-text"></span>
+                                <img src="../../client_img/<?php echo $img; ?>" height="40px" width="40px" alt="user" class="rounded-circle" width="31">
+                                <span class="ml-2 user-text font-medium"><?php echo $username; ?></span><span class="fas fa-angle-down ml-2 user-text"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
-                                    <div class=""><img src="../../design/logo/logo.png" alt="user" class="rounded" width="80"></div>
+                                    <div class=""><img src="../../client_img/<?php echo $user_img; ?>" alt="user" class="rounded" width="80"></div>
                                     <div class="ml-2">
-                                        <h4 class="mb-0">Erudite Tutors</h4>
-                                        <p class=" mb-0 text-muted">erudite@gmail.com</p>
+                                        <h4 class="mb-0"><?php echo $username; ?></h4>
+                                        <p class=" mb-0 text-muted"><?php echo $email; ?></p>
                                         <a href="javascript:void(0)" class="btn btn-sm btn-danger text-white mt-2 btn-rounded">View Profile</a>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user mr-1 ml-1"></i> My Profile</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user mr-1 ml-1"></i> My Profile</a> -->
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email mr-1 ml-1"></i> Inbox</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
+                                <a class="dropdown-item" href="../../function/logout.php"><i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
                             </div>
                         </li>
                         <!-- ============================================================== -->

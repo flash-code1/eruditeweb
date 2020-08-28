@@ -14,6 +14,8 @@
 	<link rel="canonical" href="https://www.wrappixel.com/templates/ampleadmin/" />
     <!-- Custom CSS -->
     <link href="../design/admin/dist/css/style.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="../design/admin/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,7 +39,145 @@
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
+        <?php
+// Initialize the session
+session_start();
 
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+  if($_SESSION["usertype"] == "client"){
+    header("location: ../pages/coming_soon.php");
+    exit;
+  } 
+  elseif($_SESSION["usertype"] == "admin"){
+    header("location: ../pages/admin/index.php");
+    exit;
+  }
+  elseif($_SESSION["usertype"] == "staff"){
+    header("location: ../pages/coming_soon.php");
+    exit;
+  }
+//   elseif($_SESSION["usertype"] == "staff"){
+//       if($_SESSION["employee_status"] == "Employed"){
+//         header("location: mfi/index.php");
+//       }
+//       elseif($_SESSION["employee_status"] == "Decommisioned"){
+//         $err = "Sorry, you are not allowed to login";
+//         $password = "";
+//       }
+//     exit;
+//   }
+}
+ 
+// Include config file
+require_once "../function/db/config.php";
+
+// Define variables and initialize with empty values
+$email = $password = "";
+$email_err = $password_err = "";
+$err = "";
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+        // Check if email is empty
+    if(empty(trim($_POST["email"]))){
+        $email_err = "Please enter Email.";
+    } else{
+        $email = trim($_POST["email"]);
+    }
+    
+    // Check if password is empty
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    // Validate credentials
+    if(empty($email_err) && empty($password_err)){
+        // Prepare a select statement
+        $sql = "SELECT users.id, users.fullname, users.email, users.password, users.usertype, users.account_status, users.img FROM `users` WHERE users.email = ?";
+        // $sqlj = "SELECT users.id, users.int_id, users.email, users.fullname, users.usertype, users.password, org_role, display_name FROM staff JOIN users ON users.id = staff.user_id WHERE users.email = "sam"";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            
+            // Set parameters
+            $param_email = $email;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Store result
+                mysqli_stmt_store_result($stmt);
+                
+                // Check if email exists, if yes then verify password
+                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                    // Bind result variables
+                    mysqli_stmt_bind_result($stmt, $id, $fullname, $email, $hashed_password, $usertype, $account_status, $img);
+                    if(mysqli_stmt_fetch($stmt)){
+                        if(password_verify($password, $hashed_password)){
+                            // Password is correct, so start a new session
+                            session_start();
+                            
+                            // Store data in session variables
+                            session_regenerate_id();
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["email"] = $email;
+                            $_SESSION["fullname"] = $fullname;
+                            $_SESSION["usertype"] = $usertype;
+                            $_SESSION["status"] = $account_status;
+                            $_SESSION["img"] = $img;
+                            // $_SESSION["lastname"] = $lastname;
+                            session_write_close();                            
+                            //run a quick code to show active user
+                            // Redirect user to welcome page
+                            if ($stmt->num_rows ==1 && $_SESSION["usertype"] =="client") {
+                              header("location: ../pages/coming_soon.php");
+                            }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"] =="staff"){
+                                if ($account_status == "active") {
+                                    header("location: ../pages/coming_soon.php");
+                                } else {
+                                    // echo a mesage
+                                    echo '<script type="text/javascript">
+                                    $(document).ready(function(){
+                                        Swal.fire({
+                                            type: "error",
+                                            title: "Approval Status",
+                                            text: "Please wait for account approval",
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                    });
+                                    </script>
+                                    ';
+                                }
+                            }elseif ($stmt->num_rows ==1 && $_SESSION["usertype"] =="admin"){
+                                header("location: ../pages/admin/index.php");
+                            }
+                        } else{
+                            // Display an error message if password is not valid
+                            $password_err = "The password you entered was not valid.";
+                        }
+                    }
+                } else{
+                    // Display an error message if email doesn't exist
+                    $email_err = "No account found with that email or E-mail.";
+                }
+            } else{
+                $email_err = "Oops! Something went wrong. Please try again later.";
+            }
+        }
+        
+        // Close statement
+    }
+    
+    // Close connection
+    mysqli_close($link);
+    mysqli_stmt_close($stmt);
+}
+
+?>
          <!-- Login box.scss -->
         <!-- ============================================================== -->
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(course/book.jpg) no-repeat center center;">
@@ -50,19 +190,21 @@
                     <!-- Form -->
                     <div class="row">
                         <div class="col-12">
-                            <form class="form-horizontal mt-3" id="loginform" action="../pages/client/courses.php">
-                                <div class="input-group mb-3">
+                            <form class="form-horizontal mt-3" id="loginform" method="POST">
+                                <div class="input-group mb-3 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
                                     </div>
-                                    <input type="text" class="form-control form-control-lg" placeholder="Username/E-mail" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control form-control-lg" name="email" placeholder="E-mail" aria-label="email" aria-describedby="basic-addon1">
                                 </div>
-                                <div class="input-group mb-3">
+                                <span class="help-block"><?php echo $email_err; ?></span>
+                                <div class="input-group mb-3 <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>"">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
                                     </div>
-                                    <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                                    <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
                                 </div>
+                                <span class="help-block"><?php echo $password_err; ?></span>
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-checkbox">
@@ -106,7 +248,7 @@
                             <!-- email -->
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+                                    <input class="form-control form-control-lg" type="email" required="" placeholder="email">
                                 </div>
                             </div>
                             <!-- pwd -->
@@ -144,6 +286,8 @@
     <script src="../design/admin/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="../design/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- ============================================================== -->
+    <script src="../design/admin/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="../design/admin/assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
