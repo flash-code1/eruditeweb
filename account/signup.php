@@ -50,7 +50,7 @@ $password = $_POST["password"];
 $confirm = $_POST["confirm"];
 $hash = password_hash($password, PASSWORD_DEFAULT);
 $date_time = date('Y-m-d H:i:s');
-
+$date = date('Y-m-d');
 $res = mysqli_query($connection, "SELECT * FROM `users` WHERE email = '$email'");
 // check if it ex
 if (mysqli_num_rows($res) <= 0) {

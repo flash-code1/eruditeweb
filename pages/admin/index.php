@@ -39,16 +39,20 @@ include("header.php");
                         <div class="p-lg-3 p-2">
                             <div class="d-flex align-items-center">
                                 <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
-                                <i class="ti-clipboard"></i>
+                                <i class="ti-user"></i>
                             </button>
                                 <div class="ml-4" style="width: 38%;">
-                                    <h4 class="font-light">Total Projects</h4>
+                                    <h4 class="font-light">Total Client</h4>
                                     <div class="progress">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                                     </div>
                                 </div>
                                 <div class="ml-auto">
-                                    <h2 class="display-7 mb-0">23</h2>
+                                    <?php
+                                    $client_query = mysqli_query($connection,"SELECT * FROM users WHERE usertype = 'client'");
+                                    $tot_client = number_format(mysqli_num_rows($client_query));
+                                    ?>
+                                    <h2 class="display-7 mb-0"> <?php echo $tot_client; ?> </h2>
                                 </div>
                             </div>
                         </div>
@@ -57,16 +61,20 @@ include("header.php");
                         <div class="p-lg-3 p-2">
                             <div class="d-flex align-items-center">
                                 <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
-                                <i class="ti-wallet"></i>
+                                <i class="ti-user"></i>
                             </button>
                                 <div class="ml-4" style="width: 38%;">
-                                    <h4 class="font-light">Total Earnings</h4>
+                                    <h4 class="font-light">Total Staff</h4>
                                     <div class="progress">
                                         <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                                     </div>
                                 </div>
                                 <div class="ml-auto">
-                                    <h2 class="display-7 mb-0">76</h2>
+                                <?php
+                                    $staff_query = mysqli_query($connection,"SELECT * FROM users WHERE usertype = 'staff'");
+                                    $staff_client = number_format(mysqli_num_rows($staff_query));
+                                    ?>
+                                    <h2 class="display-7 mb-0"> <?php echo $tot_client; ?> </h2>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +92,12 @@ include("header.php");
                                     </div>
                                 </div>
                                 <div class="ml-auto">
-                                    <h2 class="display-7 mb-0">83</h2>
+                                <?php
+                                    $balance_query = mysqli_query($connection, "SELECT SUM(balance_derived) AS balance FROM account");
+                                    $bal = mysqli_fetch_array($balance_query);
+                                    $balance = number_format($bal["balance"], 2);
+                                    ?>
+                                    <h2 class="display-7 mb-0"><?php echo $balance; ?></h2>
                                 </div>
                             </div>
                         </div>
@@ -102,13 +115,8 @@ include("header.php");
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h2 class="font-medium">Week Sales</h2>
-                                        <h5 class="card-subtitle mb-0">Ios app - 160 sales</h5>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <button class="btn btn-circle btn-info text-white btn-lg" href="javascript:void(0)">
-                                            <i class="ti-shopping-cart"></i>
-                                        </button>
+                                        <h2 class="font-medium"s>Daily Sales</h2>
+                                        <h5 class="card-subtitle mb-0">COMPANY MADE 2% PROFIT</h5>
                                     </div>
                                 </div>
                             </div>
@@ -123,12 +131,7 @@ include("header.php");
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <h2 class="font-medium">Week Sales</h2>
-                                        <h5 class="card-subtitle mb-0">Ios app - 160 sales</h5>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <button class="btn btn-circle btn-info text-white btn-lg" href="javascript:void(0)">
-                                            <i class="ti-shopping-cart"></i>
-                                        </button>
+                                        <h5 class="card-subtitle mb-0">COMPANY MADE 12% PROFIT</h5>
                                     </div>
                                 </div>
                             </div>
@@ -142,13 +145,8 @@ include("header.php");
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h2 class="font-medium">Week Sales</h2>
-                                        <h5 class="card-subtitle mb-0">Ios app - 160 sales</h5>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <button class="btn btn-circle btn-info text-white btn-lg" href="javascript:void(0)">
-                                            <i class="ti-shopping-cart"></i>
-                                        </button>
+                                        <h2 class="font-medium">Monthly Sales</h2>
+                                        <h5 class="card-subtitle mb-0">COMPANY MADE 20% PROFIT</h5>
                                     </div>
                                 </div>
                             </div>
@@ -179,34 +177,34 @@ include("header.php");
                                         <span class="d-none d-md-block">Set Permissions</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
                                         <span class="hidden-sm-up">
                                             <h4><i class="ti-receipt"></i></h4>
                                         </span>
                                         <span class="d-none d-md-block">Message Users</span>
                                     </a>
-                                </li>
-                                <li class="nav-item">
+                                </li> -->
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#save" role="tab">
                                         <span class="hidden-sm-up">
                                             <h4><i class="ti-check-box"></i></h4>
                                         </span>
                                         <span class="d-none d-md-block">Save and Finish</span>
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div class="tab-pane active" id="users" role="tabpanel">
                                     <div class="row py-4 px-5 no-gutters mt-3">
                                         <div class="col-sm-12 col-md-6">
-                                            <h3 class="font-light">Select Users to Manage</h3>
+                                            <h3 class="font-light">Select Staff to Manage</h3>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <ul class="list-inline dl mb-0 float-left float-md-right">
                                                 <li class="list-inline-item text-info mr-3">
-                                                    <a href="#">
+                                                    <a href="create_staff.php">
                                                         <button class="btn btn-circle btn-success text-white" href="javascript:void(0)">
                                                             <i class="ti-plus"></i>
                                                         </button>
@@ -214,7 +212,7 @@ include("header.php");
                                                     </a>
                                                 </li>
                                                 <li class="list-inline-item text-danger">
-                                                    <a href="#">
+                                                    <a href="manage_staff.php">
                                                         <button class="btn btn-circle btn-danger text-white" href="javascript:void(0)">
                                                             <i class="ti-pencil-alt"></i>
                                                         </button>
@@ -228,16 +226,22 @@ include("header.php");
                                         <div class="table-responsive border-top manage-table px-4 py-3">
                                             <table class="table no-wrap">
                                                 <thead>
+                                                <?php
+                        $query1 = "SELECT * FROM `users` WHERE usertype = 'staff'";
+                        $result1 = mysqli_query($connection, $query1);
+                      ?>
                                                     <tr>
                                                         <th scope="col" class="border-0"></th>
                                                         <th scope="col" class="border-0"></th>
                                                         <th scope="col" class="border-0">Name</th>
-                                                        <th scope="col" class="border-0">Position</th>
-                                                        <th scope="col" class="border-0">Joined</th>
-                                                        <th scope="col" class="border-0">Location</th>
+                                                        <th scope="col" class="border-0">Email</th>
+                                                        <th scope="col" class="border-0">Account Status</th>
+                                                        <th scope="col" class="border-0">Date Joined</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                <?php if (mysqli_num_rows($result1) > 0) {
+                        while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {?>
                                                     <tr class="advanced-table active">
                                                         <td class="pl-3">
                                                             <div class="custom-control custom-checkbox">
@@ -248,77 +252,32 @@ include("header.php");
                                                         <td>
                                                             <img src="../../design/admin/assets/images/users/1.jpg" class="rounded-circle" width="30">
                                                         </td>
-                                                        <td>Andrew Simons</td>
-                                                        <td>Modulator</td>
-                                                        <td>6 May 2016</td>
-                                                        <td>Gujrat, India</td>
+                                                        <td><?php echo $row1["fullname"]; ?></td>
+                                                        <td><?php echo $row1["email"]; ?></td>
+                                                        <td><?php echo $row1["account_status"]; ?></td>
+                                                        <td><?php echo $row1["created_on"]; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" class="sml-pd"></td>
                                                     </tr>
-                                                    <tr class="advanced-table">
-                                                        <td class="pl-3">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="c2">
-                                                                <label class="custom-control-label" for="c2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <img src="../../design/admin/assets/images/users/2.jpg" class="rounded-circle" width="30">
-                                                        </td>
-                                                        <td>Hanna Gover</td>
-                                                        <td>Admin </td>
-                                                        <td>13 Jan 2005</td>
-                                                        <td>Texas, United states</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="6" class="sml-pd"></td>
-                                                    </tr>
-                                                    <tr class="advanced-table">
-                                                        <td class="pl-3">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="c3">
-                                                                <label class="custom-control-label" for="c3">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <img src="../../design/admin/assets/images/users/3.jpg" class="rounded-circle" width="30">
-                                                        </td>
-                                                        <td>Joshi Nirav</td>
-                                                        <td>Admin</td>
-                                                        <td>21 Mar 2001</td>
-                                                        <td>Bhavnagar, India</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="6" class="sml-pd"></td>
-                                                    </tr>
-                                                    <tr class="advanced-table">
-                                                        <td class="pl-3">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="c4">
-                                                                <label class="custom-control-label" for="c4">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <img src="../../design/admin/assets/images/users/4.jpg" class="rounded-circle" width="30">
-                                                        </td>
-                                                        <td>Joshi Sunil</td>
-                                                        <td>Admin</td>
-                                                        <td>21 Mar 2004</td>
-                                                        <td>Gujarat, India</td>
-                                                    </tr>
+                                                    <?php }
+                                          }
+                                    else {
+                                    // echo "0 Document";
+                                    }
+                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="d-flex align-items-center p-4 mt-2">
+                                    <!-- <div class="d-flex align-items-center p-4 mt-2">
                                         <h3 class="font-light">1 members selected</h3>
                                         <div class="ml-auto">
                                             <button class="btn btn-danger text-white btn-rounded py-2 px-3">Next <i class="ti-arrow-right ml-2"></i></button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="tab-pane" id="permissions" role="tabpanel">
+                                <!-- <div class="tab-pane" id="permissions" role="tabpanel">
                                     <div class="row py-4 px-5 no-gutters mt-3">
                                         <div class="col-sm-12 col-md-6">
                                             <h3 class="font-light">Set Users Permission</h3>
@@ -437,8 +396,9 @@ include("header.php");
                                             <button class="btn btn-danger text-white btn-rounded py-2 px-3">Next <i class="ti-arrow-right ml-2"></i></button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="messages" role="tabpanel">
+                                </div> -->
+                                <!-- NEW -->
+                                <!-- <div class="tab-pane" id="messages" role="tabpanel">
                                     <div class="row py-4 px-5 no-gutters mt-3">
                                         <div class="col-sm-12 col-md-6">
                                             <h3 class="font-light">Manage Users</h3>
@@ -557,8 +517,8 @@ include("header.php");
                                             <button class="btn btn-danger text-white btn-rounded py-2 px-3">Next <i class="ti-arrow-right ml-2"></i></button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="save" role="tabpanel">
+                                </div> -->
+                                <!-- <div class="tab-pane" id="save" role="tabpanel">
                                     <div class="row py-4 px-5 no-gutters mt-3">
                                         <div class="col-sm-12 col-md-6">
                                             <h3 class="font-light">Save and finish</h3>
@@ -677,7 +637,7 @@ include("header.php");
                                             <button class="btn btn-danger text-white btn-rounded py-2 px-3">Next <i class="ti-arrow-right ml-2"></i></button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
