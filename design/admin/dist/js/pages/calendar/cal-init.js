@@ -130,44 +130,13 @@
         var form = '';
         var today = new Date($.now());
 
-        var defaultEvents =  [{
-                title: 'Released Ample Admin!',
-                start: new Date($.now() + 506800000),
-                className: 'bg-info'
-            }, {
-                title: 'This is today check date',
-                start: today,
-                end: today,
-                className: 'bg-danger'
-            }, {
-                title: 'This is your birthday',
-                start: new Date($.now() + 848000000),
-                className: 'bg-info'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1099000000),
-                end:  new Date($.now() - 919000000),
-                className: 'bg-warning'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1199000000),
-                end: new Date($.now() - 1199000000),
-                className: 'bg-purple'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 399000000),
-                end: new Date($.now() - 219000000),
-                className: 'bg-info'
-            },  
-              {
-                title: 'Hanns birthday',
-                start: new Date($.now() + 868000000),
-                className: 'bg-danger'
-            },{
-                title: 'Like it?',
-                start: new Date($.now() + 348000000),
-                className: 'bg-success'
-            }];
+        var defaultEvents =  [
+            // {
+            //     title: 'Like it?',
+            //     start: new Date($.now() + 348000000),
+            //     className: 'bg-success'
+            // }
+        ];
 
         var $this = this;
         $this.$calendarObj = $this.$calendar.fullCalendar({

@@ -26,6 +26,72 @@ include("header.php");
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
+            <?php
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $name = preg_replace('/[^\w]/', ' ', $_POST["cat_name"]);
+                    $sht_name = preg_replace('/[^\w]/', ' ', $_POST["sht_name"]);
+                    $int_id = preg_replace('/[^\w]/', ' ', $_POST["int"]);
+                    $tag = preg_replace('/[^\w]/', ' ', $_POST["customRadioInline1"]);
+                    $desc = preg_replace('/[^\w]/', ' ', $_POST["desc"]);
+                    $date = date('Y-m-d');
+                    // echk
+                    // onecheck
+                    $check = mysqli_query($connection, "SELECT * FROM category WHERE name = '$name' AND short_name = '$sht_name'");
+                    if (mysqli_num_rows($check) <= 0 && $int_id != "") {
+                        // checkl it out
+                        $temp1 = explode(".", $_FILES['chooseFile']['name']);
+                        $digits = 10;
+                        $randms1 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                        $sig_passport_one = $randms1. '.' .end($temp1);
+                        if (move_uploaded_file($_FILES['chooseFile']['tmp_name'], "category/" . $sig_passport_one)) {
+                        $msg = "Image uploaded successfully";
+                        } else {
+                          $msg = "Image Failed";
+                        }
+                        $upload_int = mysqli_query($connection, "INSERT INTO `category` (`level_id`, `name`, `short_name`, `description`, `background_img`, `date`) VALUES ('{$int_id}', '{$name}', '{$sht_name}', '{$desc}', '{$sig_passport_one}', '{$date}')");
+                        if ($upload_int) {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "success",
+        title: "Category Created",
+        text: "You Have Successfully Created "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                        } else {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "System Error",
+        text: "Error Creating "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                        }
+                    } else {
+                        echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "Category Exist",
+        text: "This Category Has Been Created Before",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                    }
+                }
+            ?>
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -38,7 +104,7 @@ include("header.php");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#">
+                                <form method="POST" enctype="multipart/form-data">
                                     <div class="form-body">
                                         <h5 class="card-title">Create an Institution Product Category</h5>
                                         <hr>
@@ -61,10 +127,22 @@ include("header.php");
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                <?php
+                                        function fill_int($connection) {
+                                            $org = "SELECT * FROM `level`";
+                                            $res = mysqli_query($connection, $org);
+                                            $out = '';
+                                            while ($row = mysqli_fetch_array($res))
+                                            {
+                                              $out .= '<option value="'.$row["id"].'">'.strtoupper($row["name"])." - ".strtoupper($row["short_name"]).'</option>';
+                                            }
+                                            return $out;
+                                          }
+                                        ?>
                                                     <label class="control-label">Institution</label>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-                                                        <option value="1">High School - Jss1</option>
-                                                        <option value="2">High School - Jss2</option>
+                                                    <select class="form-control" data-placeholder="Choose a Category" name="int" tabindex="1">
+                                                        <option value="">Select Institution</option>
+                                                        <?php echo fill_int($connection); ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -74,11 +152,11 @@ include("header.php");
                                                     <label>Search Tags</label>
                                                     <br/>
                                                     <div class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                                                        <input type="radio" id="customRadioInline1" name="customRadioInline1" value="1" class="custom-control-input">
                                                         <label class="custom-control-label" for="customRadioInline1">Active</label>
                                                     </div>
                                                     <div class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" value="0" class="custom-control-input">
                                                         <label class="custom-control-label" for="customRadioInline2">Not Active</label>
                                                     </div>
                                                 </div>
@@ -90,7 +168,7 @@ include("header.php");
                                         <div class="row">
                                             <div class="col-md-12 ">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="4">..Description</textarea>
+                                                    <textarea name="desc" class="form-control" rows="4">..Description</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +189,7 @@ include("header.php");
                                                     </div>
                                                 </div>
                                                 <div class="btn btn-info waves-effect waves-light"><span>Select Image</span>
-                                                    <input type="file" class="upload"> </div>
+                                                    <input type="file" class="upload" name="chooseFile" accept="image/*"> </div>
                                             </div>
                                         </div>
                                         <hr> </div>
@@ -135,6 +213,10 @@ include("header.php");
                                 <div class="table-responsive">
                                     <table id="zero_config" class="table table-striped border">
                                         <thead>
+                                            <?php
+                        $query1 = "SELECT * FROM `category`";
+                        $result1 = mysqli_query($connection, $query1);
+                      ?>
                                             <tr>
                                                 <th>Institution Name</th>
                                                 <th>Name</th>
@@ -145,14 +227,28 @@ include("header.php");
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php if (mysqli_num_rows($result1) > 0) {
+                        while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {?>
                                             <tr>
-                                                <td>High School - JSS1</td>
-                                                <td>Science</td>
-                                                <td>Institution Category invloving courses like - Physics, Biology, Chemisty</td>
-                                                <td>2011/04/25</td>
+                                                <?php 
+                                                $int_id = $row1["level_id"];
+                                                $query_int = mysqli_query($connection, "SELECT * FROM level WHERE id = '$int_id'");
+                                                $x = mysqli_fetch_array($query_int);
+                                                $int_name = $x["name"];
+                                                ?>
+                                                <td><?php echo $int_name; ?></td>
+                                                <td><?php echo $row1["name"]; ?> - <?php echo $row1["short_name"]; ?></td>
+                                                <td><?php echo $row1["description"]; ?></td>
+                                                <td><?php echo $row1["date"]; ?></td>
                                                 <td> <button class="btn btn-success">update</button> </td>
                                                 <td> <button class="btn btn-warning">copy</button> </td>
                                             </tr>
+                                            <?php }
+                                          }
+                                    else {
+                                    // echo "0 Document";
+                                    }
+                                    ?>
                                         </tbody>
                                     </table>
                                 </div>

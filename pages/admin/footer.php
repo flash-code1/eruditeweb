@@ -369,9 +369,11 @@
     <script src="../../design/admin/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../../design/admin/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
     <script src="../../design/admin/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <!-- sweet alart -->
+    <script src="../../design/admin/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="../../design/admin/assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
     <script>
         $('#calendar').fullCalendar('option', 'height', 650);
-
     </script>
 
 </html>

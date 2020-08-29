@@ -23,6 +23,8 @@
     <link href="../../design/admin/assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
     <!-- needed css -->
     <link href="../../design/admin/dist/css/style.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="../../design/admin/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

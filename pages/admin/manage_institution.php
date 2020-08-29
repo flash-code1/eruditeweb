@@ -26,6 +26,61 @@ include("header.php");
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
+            <?php
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $name = preg_replace('/[^\w]/', ' ', $_POST["int_name"]);
+                    $sht_name = preg_replace('/[^\w]/', ' ', $_POST["short_name"]);
+                    $cat = preg_replace('/[^\w]/', ' ', $_POST["cat"]);
+                    $req = preg_replace('/[^\w]/', ' ', $_POST["requirement"]);
+                    $desc = preg_replace('/[^\w]/', ' ', $_POST["desc"]);
+                    $date = date('Y-m-d');
+                    // echk
+                    $check = mysqli_query($connection, "SELECT * FROM level WHERE name = '$name' AND short_name = '$sht_name'");
+                    if (mysqli_num_rows($check) <= 0) {
+                        $upload_int = mysqli_query($connection, "INSERT INTO `level` (`name`, `short_name`, `requirement`, `ed_category`, `description`, `date`) VALUES ('{$name}', '{$sht_name}', '{$req}', '{$cat}', '{$desc}', '{$date}')");
+                        if ($upload_int) {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "success",
+        title: "Institution Level Created",
+        text: "You Have Successfully Created "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 3000
+    })
+});
+</script>
+';
+                        } else {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "System Error",
+        text: "Error Creating "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 3000
+    })
+});
+</script>
+';
+                        }
+                    } else {
+                        echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "Level Exist",
+        text: "This Institution Has Been Created Before",
+        showConfirmButton: false,
+        timer: 3000
+    })
+});
+</script>
+';
+                    }
+                }
+            ?>
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -38,7 +93,7 @@ include("header.php");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#">
+                                <form method="POST">
                                     <div class="form-body">
                                         <h5 class="card-title">Fill The Institution Data Properly</h5>
                                         <hr>
@@ -62,7 +117,7 @@ include("header.php");
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Institution Educational Category</label>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
+                                                    <select class="form-control" name="cat" data-placeholder="Choose a Category" tabindex="1">
                                                         <option value="0">choose a category</option>
                                                         <option value="primary">Elementary school</option>
                                                         <option value="Secondary">Secondary school</option>
@@ -84,7 +139,7 @@ include("header.php");
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="4">...Description</textarea>
+                                                    <textarea name="desc" class="form-control" rows="4">...Description</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,6 +165,10 @@ include("header.php");
                                 <div class="table-responsive">
                                     <table id="zero_config" class="table table-striped border">
                                         <thead>
+                                        <?php
+                        $query1 = "SELECT * FROM `level`";
+                        $result1 = mysqli_query($connection, $query1);
+                      ?>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Requirement</th>
@@ -120,14 +179,22 @@ include("header.php");
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php if (mysqli_num_rows($result1) > 0) {
+                        while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {?>
                                             <tr>
-                                                <td>High School</td>
-                                                <td>Done with Junior Secondary</td>
-                                                <td>A new path of education after junior high</td>
-                                                <td>2011/04/25</td>
+                                                <td><?php echo $row1["name"]; ?> - <?php echo $row1["short_name"]; ?></td>
+                                                <td><?php echo $row1["requirement"]; ?></td>
+                                                <td><?php echo $row1["description"]; ?></td>
+                                                <td><?php echo $row1["date"]; ?></td>
                                                 <td> <button class="btn btn-success">update</button> </td>
                                                 <td> <button class="btn btn-danger">delete</button> </td>
                                             </tr>
+                                            <?php }
+                                          }
+                                    else {
+                                    // echo "0 Document";
+                                    }
+                                    ?>
                                         </tbody>
                                     </table>
                                 </div>
