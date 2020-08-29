@@ -26,6 +26,129 @@ include("header.php");
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
+            <?php
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $name = preg_replace('/[^\w]/', ' ', $_POST["name"]);
+                    $int_id = preg_replace('/[^\w]/', ' ', $_POST["int_id"]);
+                    $cat_id = preg_replace('/[^\w]/', ' ', $_POST["category"]);
+                    $listing_val = preg_replace('/[^\w]/', ' ', $_POST["listing_value"]);
+                    $listing_order = preg_replace('/[^\w]/', ' ', $_POST["customRadioInline1"]);
+                    // COMPUTATION  
+                    $interval = preg_replace('/[^\w]/', ' ', $_POST["interval"]);
+                    $desc = preg_replace('/[^\w]/', ' ', $_POST["desc"]);
+                    $date = date('Y-m-d');
+                    // echk
+                    // onecheck
+                    $check = mysqli_query($connection, "SELECT * FROM courses WHERE name = '$name' AND level_id = '$int_id' AND category_id = '$cat_id'");
+                    if (mysqli_num_rows($check) <= 0 && $int_id != "" && $name != "") {
+                        // BEFORE AND AFTER COMPUTATION
+                        $run_query = mysqli_query($connection, "SELECT * FROM `courses` WHERE level_id = '$int_id'");
+                        $ord_number = mysqli_num_rows($run_query);
+                        // check
+                        if ($listing_val == "last" || $listing_val == NULL) {
+                        // normal add.
+                        $new_number = $ord_number + 1;
+                        } else {
+                            // run check
+                            if ($listing_order == "before") {
+                                // check
+                                $run_query = mysqli_query($connection, "SELECT * FROM `courses` WHERE (listing_id >= '$listing_val')");
+                                while ($x = mysqli_fetch_array($run_query)) {
+                                    // making move.
+                                    $list_id = $x["id"];
+                                    $old_list = $x["listing_id"];
+                                    // plus one
+                                    $new_list = $old_list + 1;
+                                    // update
+                                    $update_list = mysqli_query($connection, "UPDATE courses SET listing_id = '$new_list' WHERE id = '$list_id'");
+                                }
+                                if ($update_list) {
+                                    $new_number = $listing_val;
+                                } else {
+                                    $new_number = $ord_number + 1;
+                                }
+                            } else {
+                                // listing order is after
+                                $run_query = mysqli_query($connection, "SELECT * FROM `courses` WHERE (listing_id > '$listing_val')");
+                                while ($x = mysqli_fetch_array($run_query)) {
+                                    // making move.
+                                    $listing_val = $x["id"];
+                                    $old_list = $x["listing_id"];
+                                    // plus one
+                                    $new_list = $old_list + 1;
+                                    // update
+                                    $update_list = mysqli_query($connection, "UPDATE courses SET listing_id = '$new_list' WHERE id = '$list_id'");
+                                }
+                                if ($update_list) {
+                                    $new_number = $listing_val + 1;
+                                } else {
+                                    $new_number = $ord_number + 1;
+                                }
+                            }
+                        }
+                        // READY
+                        $temp1 = explode(".", $_FILES['chooseFile']['name']);
+                        $digits = 10;
+                        $randms1 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                        $sig_passport_one = $randms1. '.' .end($temp1);
+                        if (move_uploaded_file($_FILES['chooseFile']['tmp_name'], "course/" . $sig_passport_one)) {
+                        $msg = "Image uploaded successfully";
+                        } else {
+                          $msg = "Image Failed";
+                        }
+                        // VIDEO PREVIDE
+                        $temp2 = explode(".", $_FILES['introVideo']['name']);
+                        $randms2 = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+                        $video = $randms2. '.' .end($temp2);
+                        if (move_uploaded_file($_FILES['introVideo']['tmp_name'], "preview/" . $video)) {
+                        $msg = "Image uploaded successfully";
+                        } else {
+                          $msg = "Image Failed";
+                        }
+                        $upload_int = mysqli_query($connection, "INSERT INTO `courses` (`category_id`, `listing_id`, `level_id`, `name`, `description`, `img`, `rate`, `interval_day`, `intro_video`, `date`) VALUES ('{$cat_id}', '{$new_number}', '{$int_id}', '{$name}', '{$desc}', '{$sig_passport_one}', '5', '{$interval}', '{$video}', '{$date}')");
+                        if ($upload_int) {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "success",
+        title: "Course Created Successfully",
+        text: "You Have Successfully Created "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                        } else {
+                            echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "System Error",
+        text: "Error Creating "'.$name.'" ",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                        }
+                    } else {
+                        echo '<script type="text/javascript">
+$(document).ready(function(){
+    Swal.fire({
+        type: "error",
+        title: "Course Creation Error",
+        text: "This Course Has Been Created Before or Not Properly Filled",
+        showConfirmButton: false,
+        timer: 5000
+    })
+});
+</script>
+';
+                    }
+                }
+            ?>
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -38,7 +161,7 @@ include("header.php");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#">
+                                <form method="POST" enctype="multipart/form-data">
                                     <div class="form-body">
                                         <h5 class="card-title">Create Course</h5>
                                         <hr>
@@ -46,53 +169,56 @@ include("header.php");
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Course Name</label>
-                                                    <input type="text" id="course_name" class="form-control" placeholder="Enter Course Name"> </div>
+                                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Course Name"> </div>
                                             </div>
                                             <!--/span-->
                                             <div class="col-md-6">
+                                            <?php
+                                        function fill_int($connection) {
+                                            $org = "SELECT * FROM `level`";
+                                            $res = mysqli_query($connection, $org);
+                                            $out = '';
+                                            while ($row = mysqli_fetch_array($res))
+                                            {
+                                              $out .= '<option value="'.$row["id"].'">'.strtoupper($row["name"])." - ".strtoupper($row["short_name"]).'</option>';
+                                            }
+                                            return $out;
+                                          }
+                                        ?>
                                                 <div class="form-group">
                                                     <label class="control-label">Education Level</label>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-                                                        <option value="Primary">Primary School</option>
-                                                        <option value="Secondary">Secondary School</option>
-                                                        <option value="Professional">Professional Courses</option>
+                                                    <select class="form-control" name="int_id" id="int_check" data-placeholder="Choose a Int" tabindex="1">
+                                                    <option value="">Select Institution</option>
+                                                        <?php echo fill_int($connection); ?>
                                                     </select>
                                                 </div>
                                             </div>
                                             <!--/span-->
+                                            <script>
+                $(document).ready(function() {
+                  $('#int_check').on("change", function(){
+                    var int_id = $(this).val();
+                    $.ajax({
+                      url:"ajax_post/cat.php",
+                      method:"POST",
+                      data:{int_id:int_id},
+                      success:function(data){
+                        $('#make_display').html(data);
+                      }
+                    })
+                  });
+                });
+                  </script>
                                         </div>
                                         <!--/row-->
                                         <!--/row-->
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Education Category</label>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-                                                        <option value="all">General</option>
-                                                        <option value="Sc">Science</option>
-                                                        <option value="Category 2">Art & Music</option>
-                                                        <option value="Category 3">Commerce</option>
-                                                    </select>
-                                                </div>
+                                            <div id="make_display"></div>
                                             </div>
                                             <!--/span-->
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Listing hierarchy</label>
-                                                    <br/>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-                                                        <option value="all">English</option>
-                                                        <option value="all">Economics</option>
-                                                    </select>
-                                                    <div class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                                                        <label class="custom-control-label" for="customRadioInline1">Before</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                                                        <label class="custom-control-label" for="customRadioInline2">After</label>
-                                                    </div>
-                                                </div>
+                                                <div id="check_list"></div>
                                             </div>
                                             <!--/span-->
                                         </div>
@@ -101,12 +227,12 @@ include("header.php");
                                             <!--/span-->
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Start Time</label>
+                                                    <label>Course Days Interval</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon2"><i class="ti-cut"></i></span>
                                                         </div>
-                                                        <input type="time" class="form-control" placeholder="Discount" aria-label="Discount" aria-describedby="basic-addon2">
+                                                        <input type="number" name="interval" class="form-control" placeholder="Discount" value="1" aria-label="Discount" aria-describedby="basic-addon2">
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,7 +244,7 @@ include("header.php");
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon2"><i class="ti-cut"></i></span>
                                                         </div>
-                                                        <input type="url" class="form-control" placeholder="Course Image" aria-label="Discount" aria-describedby="basic-addon2" required>
+                                                        <input type="file" name="chooseFile" accept=".png, .jpg, .jpeg" class="form-control" placeholder="Course Image" aria-label="Discount" aria-describedby="basic-addon2" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,7 +253,7 @@ include("header.php");
                                         <div class="row">
                                             <div class="col-md-12 ">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="4">..course description</textarea>
+                                                    <textarea name="desc" class="form-control" rows="4">..course description</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,7 +261,7 @@ include("header.php");
                                         <div class="row">
                                             <!--/span-->
                                             <div class="col-md-3">
-                                                <h5 class="card-title mt-3">Upload Video</h5>
+                                                <h5 class="card-title mt-3">Upload Course Introduction Video</h5>
                                                 <div class="el-element-overlay">
                                                     <div class="el-card-item">
                                                         <div class="el-card-avatar el-overlay-1">
@@ -149,7 +275,7 @@ include("header.php");
                                                     </div>
                                                 </div>
                                                 <div class="btn btn-info waves-effect waves-light"><span>Upload Intro Video</span>
-                                                    <input type="file" class="upload" accept="video/*"> </div>
+                                                    <input name="introVideo" type="file" class="upload" accept="video/*" required> </div>
                                             </div>
                                         </div>
                                         <hr> </div>
@@ -173,6 +299,10 @@ include("header.php");
                                 <div class="table-responsive">
                                     <table id="zero_config" class="table table-striped border">
                                         <thead>
+                                        <?php
+                        $query1 = "SELECT * FROM `courses`";
+                        $result1 = mysqli_query($connection, $query1);
+                      ?>
                                             <tr>
                                                 <th>Course Name</th>
                                                 <th>Course Institution</th>
@@ -183,14 +313,38 @@ include("header.php");
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php if (mysqli_num_rows($result1) > 0) {
+                        while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {?>
                                             <tr>
-                                                <td>Mathematics</td>
-                                                <td>High School Primary one</td>
-                                                <td>General</td>
-                                                <td>2011/04/25</td>
+                                            <?php 
+                                                $int_id = $row1["level_id"];
+                                                $query_int = mysqli_query($connection, "SELECT * FROM level WHERE id = '$int_id'");
+                                                $x = mysqli_fetch_array($query_int);
+                                                $int_name = $x["name"];
+                                                // category
+                                                $cat_id = $row1["category_id"];
+                                                $query_cat = mysqli_query($connection, "SELECT * FROM category WHERE id = '$cat_id'");
+                                                $xx = mysqli_fetch_array($query_cat);
+                                                $cat_name = $xx["name"];
+                                                if ($cat_id != "all") {
+                                                    $cat_name = $cat_name;
+                                                } else {
+                                                    $cat_name = $cat_name;
+                                                }
+                                                ?>
+                                                <td><?php echo $row1["name"]; ?></td>
+                                                <td><?php echo $int_name; ?></td>
+                                                <td><?php echo $cat_name; ?></td>
+                                                <td><?php echo $row1["date"]; ?></td>
                                                 <td> <button class="btn btn-success">update</button> </td>
                                                 <td> <button class="btn btn-warning">manage</button> </td>
                                             </tr>
+                                            <?php }
+                                          }
+                                    else {
+                                    // echo "0 Document";
+                                    }
+                                    ?>
                                         </tbody>
                                     </table>
                                 </div>
